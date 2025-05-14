@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
         username:{
             type: String,
             required: true,
-            unique: true
+            unique: true,
         },
 
         fullName:{
@@ -73,7 +73,7 @@ const userSchema = new mongoose.Schema({
             },
         ],
     }, 
-    {Timestamp:true}
+    {timestamps:true}
 );
 
 const User = mongoose.model("User", userSchema);

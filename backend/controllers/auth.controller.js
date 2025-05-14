@@ -20,13 +20,13 @@ export const signup = async (req,res) => {
 
         //Checks if username exists
         const existingUser = await User.findOne({username});
-        if(existingUser){
-            return res.status(400).json({error:"Username is already taken"});
-        }
+		if (existingUser) {
+			return res.status(400).json({ error: "Username is already taken" });
+		}
 
         //Checks password length
         if(password.length < 6){
-            return res.status(400).json({message: "Password must be 6 characters long"});
+            return res.status(400).json({error: "Password must be 6 characters long"});
         }
 
         //Hash Password
@@ -57,12 +57,12 @@ export const signup = async (req,res) => {
             })
         }
         else{
-            res.status(400).json({message: "Invalid user data"});
+            res.status(400).json({error: "Invalid user data"});
         }
     }
     catch(error){
         console.log("Error in the signup controller", error.message);
-        res.status(500).json({message:"Internal Server Error"});
+        res.status(500).json({error:"Internal Server Error"});
     }
     
     res.json({
@@ -80,12 +80,12 @@ export const login = async (req,res) => {
 
         //Checks if username exists
         if(!user){
-            return res.status(400).json({message: "Username not found"})
+            return res.status(400).json({error: "Username not found"})
         }
 
         //Checks if password is correct
         if(!isPasswordCorrect){
-           return res.status(400).json({message: "Incorrect password"}) 
+           return res.status(400).json({error: "Incorrect password"}) 
         }
 
         //Generate new token and returns user cookie
@@ -104,7 +104,7 @@ export const login = async (req,res) => {
     }
     catch(error){
        console.log("Error in the login controller", error.message);
-       res.status(500).json({message:"Internal Server Error"}); 
+       res.status(500).json({error:"Internal Server Error"}); 
     }
 };
 
@@ -112,11 +112,11 @@ export const logout = async (req,res) => {
     try{
         //Destroys cookie
         res.cookie("jwt","",{maxAge:0}) 
-        res.status(200).json({message: "Logged out successfully"})
+        res.status(200).json({error: "Logged out successfully"})
     }
     catch(error){
        console.log("Error in the login controller", error.message);
-       res.status(500).json({message:"Internal Server Error"}); 
+       res.status(500).json({error:"Internal Server Error"}); 
     }
 };
 
@@ -128,6 +128,6 @@ export const getMe = async(req,res) => {
     }
     catch(error){
         console.log("Error in the getMe controller", error.message);
-        res.status(500).json({message:"Internal Server Error"}); 
+        res.status(500).json({error:"Internal Server Error"}); 
     }
 }
