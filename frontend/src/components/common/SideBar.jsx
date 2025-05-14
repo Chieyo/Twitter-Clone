@@ -37,14 +37,16 @@ const Sidebar = () => {
 		},
 	});
 
-	const {data: authUser} = useQuery({queryKey: ["authUser"]});
-
-	// const data = {
-	// 	fullName: "Monkey D. Luffy",
-	// 	username: "Luffy",
-	// 	profileImg: "/icons/luffy.jpg",
-	// };
-
+	const { data: authUser, isLoading, isError } = useQuery({
+		queryKey: ["authUser"],
+		queryFn: async () => {
+			const res = await fetch("/api/auth/me");
+			const data = await res.json();
+			if (!res.ok) throw new Error(data.error || "Failed to fetch auth user");
+			return data;
+		}
+	});
+	
 	return (
 		<div className='md:flex-[2_2_0] w-18 max-w-52'>
 			<div className='sticky top-0 left-0 h-screen flex flex-col border-r border-gray-700 w-20 md:w-full'>
