@@ -80,7 +80,7 @@ export const postComment = async (req,res) => {
         const post = await Post.findById(postId)
         if(!post){
 
-            return res.status(404).json({error: "Post not foun"})
+            return res.status(404).json({error: "Post not found"})
         }
 
         const comment = {user: userId, text}
